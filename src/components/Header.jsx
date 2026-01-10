@@ -1,18 +1,27 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Sparkles, Upload } from "lucide-react";
 import { assets } from "../assets/assets";
+import { AppContext } from "../context/AppContext"; // Adjust the import path as needed
 
 const Header = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
+    const { removeBg } = useContext(AppContext); // Get removeBg from context
 
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
         if (file) {
             setSelectedFile(file);
             console.log("Selected file:", file.name);
-            // Here you can add your file upload logic
-            alert(`File selected: ${file.name}`);
+            
+            // Call removeBg function from context
+            if (removeBg) {
+                removeBg(file);
+                // You can also add loading state or success message here
+            } else {
+                alert(`File selected: ${file.name}`);
+                console.log("removeBg function not found in context");
+            }
         }
     };
 
@@ -33,8 +42,14 @@ const Header = () => {
         if (file && file.type.startsWith('image/')) {
             setSelectedFile(file);
             console.log("Dropped file:", file.name);
-            // Here you can add your file upload logic
-            alert(`File dropped: ${file.name}`);
+            
+            // Call removeBg function from context
+            if (removeBg) {
+                removeBg(file);
+            } else {
+                alert(`File dropped: ${file.name}`);
+                console.log("removeBg function not found in context");
+            }
         } else {
             alert("Please drop an image file only");
         }
@@ -54,7 +69,7 @@ const Header = () => {
                         <div className="text-left">
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-semibold mb-2 shadow-sm">
                                 <Sparkles size={12} className="fill-blue-200" />
-                                <span>100% Automatic and Free</span>
+                                <span>100% Secured</span>
                             </div>
 
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-2 leading-[1.1]">
@@ -88,10 +103,6 @@ const Header = () => {
                                         {selectedFile ? `Uploaded: ${selectedFile.name.substring(0, 10)}...` : "Upload Image"}
                                     </span>
                                 </label>
-
-                                <button className="px-6 py-3 rounded-2xl bg-white text-slate-700 border-2 border-slate-100 font-bold text-lg hover:border-blue-100 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300">
-                                    Try a sample
-                                </button>
                             </div>
 
                             {/* Drag and drop indicator */}
@@ -132,7 +143,7 @@ const Header = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <p>Trusted by 10k+ designers</p>
+                                <p>Trusted by designers</p>
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,30 @@
 import { Zap, ChevronRight } from 'lucide-react';
 import { plans } from '../assets/assets';
+import { useAuth, useClerk } from '@clerk/clerk-react';
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+import placeOrder from '../service/OrderService';
 
 const Pricing = () => {
+
+    const {isSignedIn, getToken} = useAuth();
+    const {openSignIn} = useClerk();
+    const {loadUserCredits, backendUrl} = useContext(AppContext);
+
+    const handleOrder = (planId) => {
+        if(!isSignedIn){
+            return openSignIn();
+        }
+        placeOrder({
+            planId, 
+            getToken, 
+            onSuccess: () => {
+                loadUserCredits();
+            }, 
+            backendUrl
+        });
+    }
+
     const gradientAnimationStyle = {
         background: "linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899, #6366f1)",
         backgroundSize: "300% 300%",
@@ -85,13 +108,19 @@ const Pricing = () => {
                                                 style={gradientAnimationStyle}
                                                 className="absolute -inset-0.5 rounded-xl opacity-75 blur-[1px] group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
                                             ></div>
-                                            <button className="relative w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-white rounded-xl leading-none text-slate-900 font-semibold text-sm hover:bg-slate-50 transition-colors">
+                                            <button 
+                                                className="relative w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-white rounded-xl leading-none text-slate-900 font-semibold text-sm hover:bg-slate-50 transition-colors" 
+                                                onClick={() => handleOrder(plan.id)}
+                                            >
                                                 Choose {plan.name.split(" ")[0]} Plan
                                                 <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
                                             </button>
                                         </div>
                                     ) : (
-                                        <button className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-slate-100 rounded-xl leading-none text-slate-700 font-semibold text-sm hover:bg-slate-200 transition-colors">
+                                        <button 
+                                            className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-slate-100 rounded-xl leading-none text-slate-700 font-semibold text-sm hover:bg-slate-200 transition-colors"
+                                            onClick={() => handleOrder(plan.id)} // Added onClick handler
+                                        >
                                             Choose {plan.name.split(" ")[0]} Plan
                                             <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
                                         </button>

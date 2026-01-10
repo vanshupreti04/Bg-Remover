@@ -3,14 +3,12 @@ import { assets } from "../assets/assets";
 import {
     Users,
     ShoppingBag,
-    PawPrint,
     Car
 } from "lucide-react";
 
 const categories = [
     { id: "people", label: "People", icon: <Users size={18} /> },
     { id: "products", label: "Products", icon: <ShoppingBag size={18} /> },
-    { id: "animals", label: "Animals", icon: <PawPrint size={18} /> },
     { id: "cars", label: "Cars", icon: <Car size={18} /> },
 ];
 
@@ -28,9 +26,7 @@ const BgSlider = () => {
             case "people":
                 return { original: assets.people_org, processed: assets.people };
             case "products":
-                return { original: assets.people_org, processed: assets.people };
-            case "animals":
-                return { original: assets.people_org, processed: assets.people };
+                return { original: assets.product_org, processed: assets.product };
             case "cars":
                 return { original: assets.car_org, processed: assets.car };
             default:
