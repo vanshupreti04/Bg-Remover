@@ -24,7 +24,7 @@ const Result = () => {
                         BACKGROUND REMOVED
                     </h3>
                     <div className="rounded-md border border-gray-300 h-full bg-layer relative overflow-hidden">
-                        <img src={resultImage ? resultImage : ""} alt="img" className="w-full object-cover" />
+                        <img src={resultImage ? resultImage : ""} alt="" className="w-full object-cover" />
                         {!resultImage && image &&(
                             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                                 <div className="border-4 border-indigo-600 rounded-full h-12 w-12 border-t-transparent animate-spin">

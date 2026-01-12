@@ -21,23 +21,23 @@ export const plans = [
         id: "basic",
         name: "Basic Package",
         price: 99,
-        credits: 50,
+        credits: 10,
         description: "Perfect for small projects and occasional exports",
         popular: false
     },
     {
         id: "premium",
         name: "Premium Package",
-        price: 249,
-        credits: 150,
+        price: 299,
+        credits: 40,
         description: "Great for regular users and medium-sized projects",
         popular: true
     },
     {
         id: "ultimate",
         name: "Ultimate Package",
-        price: 499,
-        credits: 400,
+        price: 699,
+        credits: 100,
         description: "Ideal for power users and large-scale exports",
         popular: false
     }
